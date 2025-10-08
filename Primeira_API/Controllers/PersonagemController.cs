@@ -20,8 +20,12 @@ namespace Primeira_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewPersonagem(Personagem personagem)
+        public async Task<IActionResult> NewPersonagem([FromBody] Personagem personagem)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             _appDbContext.DbPersonagem.Add(personagem);
 
             await _appDbContext.SaveChangesAsync();
