@@ -53,14 +53,15 @@ namespace Primeira_API.Controllers
             await _appDbContext.SaveChangesAsync();
             return StatusCode(201,atual);
         }
-
-
-
-
-
-
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePersonagem(int id)
+        {
+           var personagem = await _appDbContext.DbPersonagem.FindAsync(id);
+           if (personagem == null) return NotFound("O personagem nao existe");
+          
+           _appDbContext.DbPersonagem.Remove(personagem);
+           await _appDbContext.SaveChangesAsync();
+           return Ok(personagem);
+        }
     }
-
-
-
 }
